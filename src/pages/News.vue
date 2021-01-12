@@ -1,6 +1,6 @@
 <template>
   <div class="q-pa-md">
-    <q-infinite-scroll :handler="loadMore" ref="infiniteScroll">
+    <q-infinite-scroll @load="loadMore" ref="infiniteScroll">
       <q-list bordered separator v-if="arrayNews.length">
         <q-item-label header>{{ $t('news') }}</q-item-label>
         <new-item
@@ -14,7 +14,7 @@
         <div class="row justify-center q-my-md">
           <q-spinner-dots color="primary" size="40px" />
         </div>
-      </template>    
+      </template>
     </q-infinite-scroll>
   </div>
 </template>
@@ -67,22 +67,7 @@ export default {
     ...mapMutations('news', ['setNews', 'setSingleNew', 'setStart', 'setOfflineNews']),
     loadMore (index, done) {
       this.setStart(this.news.length)
-      if (this.isOnline) {
-        setTimeout(() => {
-          this.paginatedNews().then(news => {
-            this.setNews(news.data)
-            if ( ! news.data.length) {
-              done(true)
-            } else {
-              done()
-            }
-          })
-        }, 3000)
-      } else {
-        setTimeout(() => {
-          done(true)
-        }, 1500)
-      }
+      console.log(this.news.length);
     },
     goNewsDetail (singleNew) {
       this.setSingleNew(singleNew)
